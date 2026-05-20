@@ -1,0 +1,29 @@
+<%- include("partials/header") %>
+
+<div class="form-box">
+
+    <a class="top-back-btn" href="/students">← Back</a>
+
+    <h2>Edit Student</h2>
+
+    <form action="/students/update/<%= student._id %>" method="POST">
+
+        <input type="text" name="name" value="<%= student.name %>" required>
+
+        <input type="number" name="rollno" value="<%= student.rollno %>" readonly>
+
+        <input type="text" name="course" value="<%= student.course %>" required>
+
+        <input type="number" name="age" value="<%= student.age %>" required>
+
+        <input type="email" name="email" value="<%= student.email %>" required>
+
+        <input type="text" name="city" value="<%= student.city %>" required>
+
+        <button type="submit">Update Student</button>
+
+    </form>
+
+</div>
+
+<%- include("partials/footer") %>

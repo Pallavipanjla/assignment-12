@@ -1,0 +1,250 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:#eef2f7;
+    min-height:100vh;
+}
+
+/* NAVBAR */
+
+.navbar{
+    background:linear-gradient(to right,#162033,#334155);
+    padding:24px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.15);
+}
+
+.logo{
+    color:white;
+    font-size:38px;
+    font-weight:700;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+    font-size:20px;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.navbar a:hover{
+    color:#fbbf24;
+}
+
+/* CONTAINER */
+
+.container{
+    width:88%;
+    margin:45px auto;
+}
+
+/* TOP SECTION */
+
+.top-section{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.top-section h1{
+    font-size:68px;
+    color:#1e293b;
+    font-weight:700;
+}
+
+/* SEARCH */
+
+.top-section form{
+    display:flex;
+    gap:15px;
+}
+
+.top-section input{
+    width:390px;
+    padding:18px 22px;
+    border:1px solid #dbe1ea;
+    border-radius:18px;
+    outline:none;
+    font-size:17px;
+    background:white;
+    box-shadow:0 5px 12px rgba(0,0,0,0.05);
+}
+
+.top-section button{
+    padding:18px 28px;
+    border:none;
+    border-radius:16px;
+    background:#1f2937;
+    color:white;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.top-section button:hover{
+    transform:translateY(-2px);
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+table thead{
+    background:#f3f4f6;
+}
+
+table th{
+    padding:25px 20px;
+    text-align:left;
+    font-size:21px;
+    color:#111827;
+    font-weight:700;
+}
+
+table td{
+    padding:25px 20px;
+    font-size:18px;
+    color:#111827;
+    border-bottom:1px solid #e5e7eb;
+}
+
+table tbody tr:hover{
+    background:#f9fafb;
+}
+
+/* ACTION BUTTONS */
+
+.view,
+.edit,
+.delete{
+    text-decoration:none;
+    color:white;
+    padding:12px 20px;
+    border-radius:14px;
+    margin-right:10px;
+    font-size:16px;
+    font-weight:600;
+    transition:0.3s;
+    display:inline-block;
+}
+
+.view{
+    background:linear-gradient(to right,#0ea5e9,#38bdf8);
+}
+
+.edit{
+    background:linear-gradient(to right,#6366f1,#818cf8);
+}
+
+.delete{
+    background:linear-gradient(to right,#ef4444,#f87171);
+}
+
+.view:hover,
+.edit:hover,
+.delete:hover{
+    transform:translateY(-2px);
+}
+
+/* FORM */
+
+.form-box{
+    width:500px;
+    background:white;
+    margin:40px auto;
+    padding:45px;
+    border-radius:30px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.08);
+    position:relative;
+}
+
+.form-box h2{
+    text-align:center;
+    margin-bottom:35px;
+    font-size:50px;
+    color:#111827;
+}
+
+.form-box input{
+    width:100%;
+    padding:18px;
+    margin-bottom:22px;
+    border:1px solid #dbe1ea;
+    border-radius:16px;
+    outline:none;
+    font-size:17px;
+    background:#f9fafb;
+}
+
+.form-box button{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:16px;
+    background:linear-gradient(to right,#2563eb,#3b82f6);
+    color:white;
+    font-size:20px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.form-box button:hover{
+    transform:translateY(-2px);
+}
+
+/* VIEW CARD */
+
+.view-card{
+    width:550px;
+    margin:40px auto;
+    background:white;
+    padding:45px;
+    border-radius:30px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.08);
+    position:relative;
+}
+
+.view-card h2{
+    margin-bottom:30px;
+    font-size:42px;
+    color:#111827;
+}
+
+.view-card p{
+    margin-bottom:18px;
+    font-size:21px;
+}
+
+/* BACK BUTTON */
+
+.top-back-btn,
+.back-btn{
+    text-decoration:none;
+    background:#1f2937;
+    color:white;
+    padding:12px 18px;
+    border-radius:12px;
+    font-size:15px;
+    position:absolute;
+    top:20px;
+    right:20px;
+}
