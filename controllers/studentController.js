@@ -1,100 +1,65 @@
-const Student = require("../models/Student");
+const Student = require('../models/Student');
 
-// GET /students
-// GET /students?search=keyword
+// GET all students
 exports.getAllStudents = async (req, res) => {
-    try {
-        const search = req.query.search || "";
+  try {
+    const { name, course, city } = req.query; // for search
+    let filter = {};
+    if (name)   filter.name   = new RegExp(name, 'i');
+    if (course) filter.course = new RegExp(course, 'i');
+    if (city)   filter.city   = new RegExp(city, 'i');
 
-        const query = search ? {
-            $or: [
-                { name:   { $regex: search, $options: "i" } },
-                { course: { $regex: search, $options: "i" } },
-                { city:   { $regex: search, $options: "i" } }
-            ]
-        } : {};
-
-        const students = await Student.find(query);
-        res.status(200).json({ success: true, count: students.length, data: students });
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+    const students = await Student.find(filter);
+    res.json(students);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
-// POST /students/add
+// GET single student
+exports.getStudent = async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) return res.status(404).json({ error: 'Student not found' });
+    res.json(student);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// POST add student
 exports.addStudent = async (req, res) => {
-    try {
-        const existingRoll = await Student.findOne({ rollno: req.body.rollno });
-        if (existingRoll) {
-            return res.status(400).json({ success: false, message: "Roll number already exists." });
-        }
-
-        const existingEmail = await Student.findOne({ email: req.body.email });
-        if (existingEmail) {
-            return res.status(400).json({ success: false, message: "Email already exists." });
-        }
-
-        const student = new Student(req.body);
-        await student.save();
-
-        res.status(201).json({ success: true, message: "Student added successfully.", data: student });
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+  try {
+    const student = new Student(req.body);
+    await student.save();
+    res.status(201).json({ message: 'Student added', student });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
-// GET /students/:id
-exports.viewStudent = async (req, res) => {
-    try {
-        const student = await Student.findById(req.params.id);
-        if (!student) {
-            return res.status(404).json({ success: false, message: "Student not found." });
-        }
-
-        res.status(200).json({ success: true, data: student });
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-// POST /students/update/:id
+// POST update student
 exports.updateStudent = async (req, res) => {
-    try {
-        const existingEmail = await Student.findOne({
-            email: req.body.email,
-            _id: { $ne: req.params.id }
-        });
-
-        if (existingEmail) {
-            return res.status(400).json({ success: false, message: "Email already registered to another student." });
-        }
-
-        const updated = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!updated) {
-            return res.status(404).json({ success: false, message: "Student not found." });
-        }
-
-        res.status(200).json({ success: true, message: "Student updated successfully.", data: updated });
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+  try {
+    const student = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }  // return updated doc + re-run validations
+    );
+    if (!student) return res.status(404).json({ error: 'Student not found' });
+    res.json({ message: 'Student updated', student });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 };
 
-// GET /students/delete/:id
+// GET delete student
 exports.deleteStudent = async (req, res) => {
-    try {
-        const deleted = await Student.findByIdAndDelete(req.params.id);
-        if (!deleted) {
-            return res.status(404).json({ success: false, message: "Student not found." });
-        }
-
-        res.status(200).json({ success: true, message: "Student deleted successfully." });
-
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+  try {
+    const student = await Student.findByIdAndDelete(req.params.id);
+    if (!student) return res.status(404).json({ error: 'Student not found' });
+    res.json({ message: 'Student deleted' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
