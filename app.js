@@ -1,28 +1,23 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const express = require('express');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-dotenv.config();
+const studentRoutes = require('./routes/studentRoutes');
 
 const app = express();
 
+// Middleware — parse incoming JSON
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
+// Routes
+app.use('/students', studentRoutes);
+
+// Connect to MongoDB, then start server
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("MongoDB Connected"))
-    .catch((err) => console.log(err));
-
-const studentRoutes = require("./routes/studentRoutes");
-
-app.use("/students", studentRoutes);
-
-app.get("/", (req, res) => {
-    res.json({ message: "Student API is running." });
-});
-
-const PORT = process.env.PORT || 2000;
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+  .then(() => {
+    console.log('✅ MongoDB connected');
+    app.listen(process.env.PORT, () => {
+      console.log(`🚀 Server running on port ${process.env.PORT}`);
+    });
+  })
+  .catch(err => console.error('❌ DB connection failed:', err));
