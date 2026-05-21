@@ -1,17 +1,13 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const studentController = require("../controllers/studentController");
+const ctrl = require('../controllers/studentController');
 
-// GET /students         - Get all students (supports ?search=)
-// POST /students/add    - Add new student
-// GET /students/:id     - Get single student
-// POST /students/update/:id - Update student
-// GET /students/delete/:id  - Delete student
-
-router.get("/", studentController.getAllStudents);
-router.post("/add", studentController.addStudent);
-router.get("/:id", studentController.viewStudent);
-router.post("/update/:id", studentController.updateStudent);
-router.get("/delete/:id", studentController.deleteStudent);
+router.get('/',           ctrl.getAllStudents);   // also handles ?name=&course=&city=
+router.get('/add',        (req, res) => res.json({ message: 'Add student endpoint' }));
+router.post('/add',       ctrl.addStudent);
+router.get('/view/:id',   ctrl.getStudent);
+router.get('/edit/:id',   ctrl.getStudent);       // returns data for editing
+router.post('/update/:id',ctrl.updateStudent);
+router.get('/delete/:id', ctrl.deleteStudent);
 
 module.exports = router;
