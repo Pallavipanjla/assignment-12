@@ -1,28 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const path = require("path");
 
 dotenv.config();
 
 const app = express();
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, "public")));
-
-app.set("view engine", "ejs");
-
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch((err) => console.log(err));
+    .then(() => console.log("MongoDB Connected"))
+    .catch((err) => console.log(err));
 
 const studentRoutes = require("./routes/studentRoutes");
 
 app.use("/students", studentRoutes);
 
 app.get("/", (req, res) => {
-    res.redirect("/students");
+    res.json({ message: "Student API is running." });
 });
 
 const PORT = process.env.PORT || 2000;
